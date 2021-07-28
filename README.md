@@ -26,7 +26,7 @@ As well as the open bugs, there are some limitations in the Microsoft Graph API
  - Events (e.g. read receipts, presence, typing notificaions, etc) are not currently available via the Graph API
 
 ## Requirements
-The Bridge will to be accessible to allow Microsoft Graph API to call webhooks via http(s), and for user oauth authenticaion.  It is strongly recommended that a reverse proxy is used to ensure the endpoints are exposed via https. 
+The Bridge will require to be accessible to allow Microsoft Graph API to call webhooks via http(s), and for user oauth authenticaion.  It is strongly recommended that a reverse proxy is used to ensure the endpoints are exposed via https. 
 
 The `oauth:serverBaseUri` setting in config.yaml should be set to the base URI  (e.g.  `https://my.domain.com/` or `https://me.home.net:2700/`, etc)
 
