@@ -28,7 +28,7 @@ As well as the open bugs, there are some limitations in the Microsoft Graph API
 ## Requirements
 The Bridge will to be accessible to allow Microsoft Graph API to call webhooks via http(s), and for user oauth authenticaion.  It is strongly recommended that a reverse proxy is used to ensure the endpoints are exposed via https. 
 
-The `oauth:serverBaseUri` setting in config.yaml should be set to the base URI  (e.g.  https://my.domain.com/ or https://me.home.net:2700/, etc)
+The `oauth:serverBaseUri` setting in config.yaml should be set to the base URI  (e.g.  `https://my.domain.com/` or `https://me.home.net:2700/`, etc)
 
 
 ## Install Instructions (from Source)
@@ -78,7 +78,7 @@ The following steps should be followed to create the Azure application for authe
 4. Fill out initial details 
    * Give the application a name (e.g. ms-teams-bridge). 
    * For supported account types select "Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)"
-   * For Redirect URL, enter the URL to the OAuth call url (Combine `serverBaseUri` and `redirectPath` from the `oauth` section in config.yaml).  e.g.  https://my.domain.com/msteams/oauth
+   * For Redirect URL, enter the URL to the OAuth call url (Combine `serverBaseUri` and `redirectPath` from the `oauth` section in config.yaml).  e.g.  `https://my.domain.com/msteams/oauth`
    * Register the app
 5. On the application detail screen take a note of the following value which requires to be entered into the config.yaml file
    * `Application (client) ID`  - Set the `oauth:clientId` to this value
@@ -91,6 +91,6 @@ The following steps should be followed to create the Azure application for authe
    * `offline_access`
 
 ## Linking your Microsoft account
-With the bridge running, visit `serverBaseUri`/login (e.g. https://my.domain.com/login).  This will take you to microsoft login page.  After logging in a 6 digit authoisation code will be displayed. This code should be used to link your matrix account to your microsoft account.
+With the bridge running, visit `serverBaseUri`/login (e.g. `https://my.domain.com/login`).  This will take you to microsoft login page.  After logging in a 6 digit authoisation code will be displayed. This code should be used to link your matrix account to your microsoft account.
 
 Microsoft require you to revalidate the application every (approx) 90 days. To do this visit the login link above to retrieve a new 6 digit code, then talk to the bot and use the `relink {puppetId} {code}` command.   e.g. `relink 1 abcdef`
