@@ -1,0 +1,35 @@
+{
+  "name": "mx-puppet-msteams-chat",
+  "version": "0.0.1",
+  "description": "MS Teams Matrix Bridge",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint --project ./tsconfig.json -t stylish",
+    "start": "npm run-script build && node ./build/index.js",
+    "debug": "npm run-script build && node ./build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Neil Burrows",
+  "dependencies": {
+    "@microsoft/microsoft-graph-client": "^2.2.1",
+    "command-line-args": "^5.1.1",
+    "command-line-usage": "^5.0.5",
+    "escape-html": "^1.0.3",
+    "events": "^3.1.0",
+    "got": "^11.8.2",
+    "html-to-formatted-text": "^2.7.0",
+    "isomorphic-fetch": "^3.0.0",
+    "js-yaml": "^3.13.1",
+    "jwt-decode": "^3.1.2",
+    "moment": "^2.29.1",
+    "mx-puppet-bridge": "0.1.4",
+    "node-emoji": "^1.10.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.8.3",
+    "url-join": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.34"
+  }
+}

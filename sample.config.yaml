@@ -1,0 +1,107 @@
+# For more generic bridge configuration options have a look at
+# https://github.com/Sorunome/mx-puppet-bridge/blob/master/sample.config.yaml
+
+bridge:
+  # Port to host the bridge on
+  # Used for communication between the homeserver and the bridge
+  port: 8432
+  # The host connections to the bridge's webserver are allowed from
+  bindAddress: localhost
+  # Public domain of the homeserver
+  domain: matrix.org
+  # Reachable URL of the Matrix homeserver
+  homeserverUrl: https://matrix.org
+
+# Microaoft Azure OAuth settings. See README.md for info on how to configure.
+oauth:
+  # Azure app credentials.
+  clientId: AZURE_APP_CLIENT_ID
+  clientSecret: AZURE_APP_CLIENT_SECRET
+  # Azure Auth Endpoint
+  #endPoint: https://login.windows.net/common/oauth2
+  # Path where to listen for OAuth redirect callbacks.
+  redirectPath: /msteams/oauth
+  # This is the base URL Azure will use for push webhooks, and where users will be directed to login
+  serverBaseUri: https://your.domain/
+  
+# Teams related settings
+teams:
+  # Chats updated in the last X days will be considered recent
+  recentChatDays: 40
+  # How frequently to poll for new chats (seconds)
+  newChatPollingPeriod: 300
+
+presence:
+  # Bridge Discord online/offline status
+  enabled: true
+  # How often to send status to the homeserver in milliseconds
+  interval: 500
+
+provisioning:
+  # Regex of Matrix IDs allowed to use the puppet bridge
+  whitelist:
+    # Allow a specific user
+    #- "@user:server\\.com"
+    # Allow users on a specific homeserver
+    - "@.*:yourserver\\.com"
+    # Allow anyone
+    #- ".*"
+  # Regex of Matrix IDs forbidden from using the puppet bridge
+  #blacklist:
+    # Disallow a specific user
+    #- "@user:server\\.com"
+    # Disallow users on a specific homeserver
+    #- "@.*:yourserver\\.com"
+
+  # Shared secret for the provisioning API for use by integration managers.
+  # If this is not set, the provisioning API will not be enabled.
+  #sharedSecret: random string
+  # Path prefix for the provisioning API. /v1 will be appended to the prefix automatically.
+  apiPrefix: /_matrix/provision
+
+database:
+  # Use Postgres as a database backend
+  # If set, will be used instead of SQLite3
+  # Connection string to connect to the Postgres instance
+  # with username "user", password "pass", host "localhost" and database name "dbname".
+  # Modify each value as necessary
+  #connString: "postgres://user:pass@localhost/dbname?sslmode=disable"
+  # Use SQLite3 as a database backend
+  # The name of the database file
+  filename: database.db
+
+logging:
+  # Log level of console output
+  # Allowed values starting with most verbose:
+  # silly, verbose, info, warn, error
+  console: info
+  # Date and time formatting
+  lineDateFormat: MMM-D HH:mm:ss.SSS
+  # Logging files
+  # Log files are rotated daily by default
+  files:
+    # Log file path
+    - file: "bridge.log"
+      # Log level for this file
+      # Allowed values starting with most verbose:
+      # silly, debug, verbose, info, warn, error
+      level: info
+      # Date and time formatting
+      datePattern: YYYY-MM-DD
+      # Maximum number of logs to keep.
+      # This can be a number of files or number of days.
+      # If using days, add 'd' as a suffix
+      maxFiles: 14d
+      # Maximum size of the file after which it will rotate. This can be a
+      # number of bytes, or units of kb, mb, and gb. If using the units, add
+      # 'k', 'm', or 'g' as the suffix
+      maxSize: 50m
+
+namePatterns:
+  # The default displayname for a bridged user
+  #
+  # Available variables:
+  #
+  # name: username of the user
+  # team: name of the team
+  user: :name
