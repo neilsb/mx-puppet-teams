@@ -13,6 +13,8 @@ Currently supported and planned features are:
 - [X] One to One Chats
 - [ ] Group Chats
 - [ ] Meeting Chats
+- [X] Message Edits (Teams -> Matrix only)
+- [ ] Message Deletes
 - [ ] Reactions
 - [ ] Images
 - [ ] Attachments
@@ -24,6 +26,7 @@ As well as the open bugs, there are some limitations in the Microsoft Graph API
  - Chats can only be subscribed to for notifications once the chat has been started.  As a result, the bridge needs to poll for new chats.  This means that while messages in existing chats will be delivered almost instantly, new chats will only appear when polled for  (see config option `teams:newChatPollingPeriod`)
  - Attachments cannot currently be sent to MS Teams via Graph API.
  - Events (e.g. read receipts, presence, typing notificaions, etc) are not currently available via the Graph API
+ - Graph API does not updating of existing message text  (Prevents sending message edits from Matrix to Teams)
 
 ## Requirements
 The Bridge will to be accessible to allow Microsoft Graph API to call webhooks via http(s), and for user oauth authenticaion.  It is strongly recommended that a reverse proxy is used to ensure the endpoints are exposed via https. 

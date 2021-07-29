@@ -97,6 +97,14 @@ export class App {
 				log.error("Error handling message event", err);
 			}
 		});
+		client.on("messageChanged", async (msg1: Message ) => {
+			try {
+				log.verbose("Got new message changed event");
+				await this.handleTeamsMessageChanged(puppetId, msg1,);
+			} catch (err) {
+				log.error("Error handling teams messageChanged event", err);
+			}
+		});
 
 		this.puppet.AS.expressAppInstance.post(`/${puppetId}/chatSub`, client.incomingMessage.bind(client));
 
@@ -200,6 +208,25 @@ export class App {
 			await this.puppet.sendMessage(params, opts);
 		}
 
+	}
+
+	public async handleTeamsMessageChanged(puppetId: number, msg: Message) {
+		if (!msg.text) {
+			msg.text = "";
+		}
+		const params = await this.getSendParams(puppetId, msg);
+		const client = this.puppets[puppetId].client;
+		log.verbose("Received message.");
+		const dedupeKey = `${puppetId};${params.room.roomId}`;
+
+		if (!await this.messageDeduplicator.dedupe(dedupeKey, params.user.userId, params.eventId, msg.text || "")) {
+			const opts: IMessageEvent = {
+				formattedBody: msg.text.replace(/<[\/]?div>/g, "").replace(/<span[^>]*><img*[^>]+alt="([^\"]*)"[^>]*><\/span>/g, "$1"),
+				body: htmlToFormattedText(msg.text),
+				emote: false
+			};
+			await this.puppet.sendEdit(params, msg.id, opts);
+		}
 	}
 
 	public async getSendParams(

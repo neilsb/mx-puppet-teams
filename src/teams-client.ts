@@ -357,7 +357,15 @@ export class TeamsClient extends EventEmitter {
                         .get();
 
                     const m = await this.parseTeamsMessage(r);
-                    if (m) { this.emit('message', m); }
+                    
+                    if (m) 
+                    { 
+                        if(req.body.value[i].changeType == 'created') {
+                            this.emit('message', m); 
+                        } else {
+                            this.emit('messageChanged', m); 
+                        }
+                    }
                 }
             }
             catch (err) {
