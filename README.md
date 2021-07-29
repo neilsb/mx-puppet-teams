@@ -14,7 +14,7 @@ Currently supported and planned features are:
 - [ ] Group Chats
 - [ ] Meeting Chats
 - [X] Message Edits (Teams -> Matrix only)
-- [ ] Message Deletes
+- [X] Message Deletes (Teams -> Matrix only)
 - [ ] Reactions
 - [ ] Images
 - [ ] Attachments
@@ -26,7 +26,7 @@ As well as the open bugs, there are some limitations in the Microsoft Graph API
  - Chats can only be subscribed to for notifications once the chat has been started.  As a result, the bridge needs to poll for new chats.  This means that while messages in existing chats will be delivered almost instantly, new chats will only appear when polled for  (see config option `teams:newChatPollingPeriod`)
  - Attachments cannot currently be sent to MS Teams via Graph API.
  - Events (e.g. read receipts, presence, typing notificaions, etc) are not currently available via the Graph API
- - Graph API does not updating of existing message text  (Prevents sending message edits from Matrix to Teams)
+ - Graph API does not allow updating of existing message text  (Prevents sending message edits/deletes from Matrix to Teams)
 
 ## Requirements
 The Bridge will require to be accessible to allow Microsoft Graph API to call webhooks via http(s), and for user oauth authenticaion.  It is strongly recommended that a reverse proxy is used to ensure the endpoints are exposed via https. 
@@ -94,6 +94,6 @@ The following steps should be followed to create the Azure application for authe
    * `offline_access`
 
 ## Linking your Microsoft account
-With the bridge running, visit `serverBaseUri`/login (e.g. `https://my.domain.com/login`).  This will take you to microsoft login page.  After logging in a 6 digit authoisation code will be displayed. This code should be used to link your matrix account to your microsoft account.
+With the bridge running, visit `serverBaseUri`/login (e.g. `https://my.domain.com/login`).  This will take you to microsoft login page.  After logging in a 6 character authorisation code will be displayed. This code should be used to link your matrix account to your Microsoft account.
 
 Microsoft require you to revalidate the application every (approx) 90 days. To do this visit the login link above to retrieve a new 6 digit code, then talk to the bot and use the `relink {puppetId} {code}` command.   e.g. `relink 1 abcdef`

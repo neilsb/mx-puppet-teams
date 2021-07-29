@@ -97,15 +97,22 @@ export class App {
 				log.error("Error handling message event", err);
 			}
 		});
-		client.on("messageChanged", async (msg1: Message ) => {
+		client.on("messageChanged", async (msg: Message ) => {
 			try {
 				log.verbose("Got new message changed event");
-				await this.handleTeamsMessageChanged(puppetId, msg1,);
+				await this.handleTeamsMessageChanged(puppetId, msg);
 			} catch (err) {
 				log.error("Error handling teams messageChanged event", err);
 			}
 		});
-
+		client.on("messageDeleted", async (msg: Message ) => {
+			try {
+				log.verbose("Got new message deleted event");
+				await this.handleTeamsMessageDeleted(puppetId, msg);
+			} catch (err) {
+				log.error("Error handling teams messageDeleted event", err);
+			}
+		});
 		this.puppet.AS.expressAppInstance.post(`/${puppetId}/chatSub`, client.incomingMessage.bind(client));
 
 		this.puppets[puppetId] = {
@@ -229,6 +236,11 @@ export class App {
 		}
 	}
 
+	public async handleTeamsMessageDeleted(puppetId: number, msg: Message) {
+		const params = await this.getSendParams(puppetId, msg);
+		await this.puppet.sendRedact(params, msg.id);
+	}
+
 	public async getSendParams(
 		puppetId: number,
 		msg: Message
@@ -261,13 +273,13 @@ export class App {
 		if (!p) {
 			return;
 		}
-		const chan = p.client.chats.get(room.roomId);
-		if (!chan) {
+		const chat = p.client.chats.get(room.roomId);
+		if (!chat) {
 			log.warn(`Room ${room.roomId} not found!`);
 			return;
 		}
 
-		const eventId = await p.client.sendMessage(chan, event.content.formatted_body ?? event.content.body);
+		const eventId = await p.client.sendMessage(chat, event.content.formatted_body ?? event.content.body);
 		if (eventId) {
 			await this.puppet.eventSync.insert(room, data.eventId!, eventId);
 		}

@@ -342,8 +342,26 @@ export class TeamsClient extends EventEmitter {
             try {
                 for (let i = 0; i < req.body.value.length; i++) {
 
+                    const mdetails = req.body.value[i].resource.match(/chats\('([^']*).*messages\('([^']*)/);
+
+                    if (req.body.value[i].changeType == 'deleted') {
+                        log.info("Got message delete event from Teams");
+                        const chat = this.chats.get(mdetails[1]);
+
+                        if (chat) {
+                            // teams only gives us the deleted message id, not the oringinal author.  The bridge requires
+                            // a user id, so just take the 1st member of the room as the redaction author
+                            this.emit('messageDeleted', {
+                                id: mdetails[2],
+                                chat: chat,
+                                author: chat.members.get([...chat.members.keys()][0]),
+                                text: ""
+                            } as Message);
+                        }
+                        return;
+                    }
+
                     if (req.body.value[i].changeType == 'created') {
-                        let mdetails = req.body.value[i].resource.match(/chats\('([^']*).*messages\('([^']*)/);
                         if (mdetails.length == 3 && await this.opts.knownMessage(mdetails[1], mdetails[2])) {
                             // This is a message created by bridge
                             log.debug(`Ignoring message ${mdetails[1]}/${mdetails[2]} as it was created by us`);
@@ -358,9 +376,8 @@ export class TeamsClient extends EventEmitter {
 
                     const m = await this.parseTeamsMessage(r);
                     
-                    if (m) 
-                    { 
-                        if(req.body.value[i].changeType == 'created') {
+                    if (m) {
+                        if (req.body.value[i].changeType == 'created') {
                             this.emit('message', m); 
                         } else {
                             this.emit('messageChanged', m); 
