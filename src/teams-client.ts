@@ -3,7 +3,7 @@ import { EventEmitter } from "events";
 import * as moment from "moment";
 import { Config } from "./index";
 import { TeamsAuthProvider } from "./auth/teams-auth-provider";
-import { Log } from "mx-puppet-bridge";
+import { IFileEvent, Log } from "mx-puppet-bridge";
 import * as urljoin from 'url-join';
 
 const log = new Log("TeamsPuppet:teams-client");
@@ -441,4 +441,57 @@ export class TeamsClient extends EventEmitter {
         }
     }
 
+    /**
+     * Send image to Teams Chat
+     * 
+     * @param room Chat to upload image to
+     * @param data File details.
+     * 
+     * @return Teams message Id.
+     */
+    public async sendImage(room: Chat, data: IFileEvent): Promise<string> {
+
+        try {
+
+            // create inline using thumbnail, with link to full size image
+            var info: any = data.info;
+            const thumbUrl = data.url.replace(/([^\/]*)$/, info.thumbnail_url.substr(info.thumbnail_url.search(/[^\/]*$/)));
+
+            // teams uses height of 250 to constrain images
+            const h: number = info.thumbnail_info.h < 250 ? info.thumbnail_info.h : 250;
+            const w: number = info.thumbnail_info.h < 250 ? info.thumbnail_info.w : (info.thumbnail_info.w / info.thumbnail_info.h) * 250;
+            const msg = `<img src="${thumbUrl}" width="${w}" height="${h}" style="vertical-align:bottom;"><br /><a href="${data.url}">[Download Image: ${info.w} x ${info.h} (${this.humanReadableSize(info.size)})]</a>`
+
+            const response = await this.client.api(`/chats/${room.id}/messages`)
+                .version('beta')
+                .post({
+                    "body": {
+                        "contentType": "html",
+                        "content": msg,
+                    }
+                });
+
+            return response.id;
+        }
+        catch (err) {
+            log.error("Error sending image", err);
+            return "";
+        }
+    }
+
+    /**
+     * Format bytes as human readable text.
+     * 
+     * @param bytes Number of bytes.
+     * 
+     * @return Formatted string.
+     */
+    private humanReadableSize(bytes: number): string {
+        if (bytes == 0) {
+            return "0.00 B";
+        }
+        var e = Math.floor(Math.log(bytes) / Math.log(1024));
+        return (bytes / Math.pow(1024, e)).toFixed(2) +
+            ' ' + ' KMGTP'.charAt(e) + 'B';
+    }
 }
