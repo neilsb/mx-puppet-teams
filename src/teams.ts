@@ -69,8 +69,13 @@ export class App {
 		log.info(`Adding new Puppet: puppetId=${puppetId}`);
 		log.info(`Got data: dat=${JSON.stringify(data)}`);
 
-		// Checks for updated access token
+		// check for updated access token
+		if(data.auth_code) {
+			console.log("Data", data);
 		await this.authProvider.checkForNewAuthorization(puppetId, data.auth_code);
+			delete(data.auth_code);
+			this.puppet.setPuppetData(puppetId, data);
+		}
 
 		if (this.puppets[puppetId]) {
 			await this.removePuppet(puppetId);
