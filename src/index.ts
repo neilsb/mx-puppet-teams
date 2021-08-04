@@ -98,6 +98,7 @@ async function run() {
 	puppet.on("puppetDelete", teams.deletePuppet.bind(teams));
 	puppet.on("message", teams.handleMatrixMessage.bind(teams));
 	puppet.on("image", teams.handleMatrixImage.bind(teams));
+	puppet.on("file", teams.handleMatrixFile.bind(teams));
 	puppet.setCreateRoomHook(teams.createRoom.bind(teams));
 	puppet.setGetDmRoomIdHook(teams.getDmRoomId.bind(teams));
 	puppet.setListUsersHook(teams.listUsers.bind(teams));
