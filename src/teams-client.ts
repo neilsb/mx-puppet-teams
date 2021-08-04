@@ -480,6 +480,37 @@ export class TeamsClient extends EventEmitter {
     }
 
     /**
+     * Send file to teams as attachment (link)
+     * 
+     * @param room Chat to upload to
+     * @param data File details.
+     * 
+     * @return Teams message Id.
+     */
+     public async sendFile(room: Chat, data: IFileEvent): Promise<string> {
+
+        try {
+            var info: any = data.info;
+            const msg = `<ul><li><a href="${data.url}">${data.filename}</a> (${this.humanReadableSize(info.size)})</li></ul>`;
+
+            const response = await this.client.api(`/chats/${room.id}/messages`)
+                .version('beta')
+                .post({
+                    "body": {
+                        "contentType": "html",
+                        "content": msg,
+                    }
+                });
+
+            return response.id;
+        }
+        catch (err) {
+            log.error("Error sending file", err);
+            return "";
+        }
+    }
+
+    /**
      * Format bytes as human readable text.
      * 
      * @param bytes Number of bytes.

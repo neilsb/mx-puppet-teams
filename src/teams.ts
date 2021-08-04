@@ -71,7 +71,6 @@ export class App {
 
 		// check for updated access token
 		if(data.auth_code) {
-			console.log("Data", data);
 		await this.authProvider.checkForNewAuthorization(puppetId, data.auth_code);
 			delete(data.auth_code);
 			this.puppet.setPuppetData(puppetId, data);
@@ -308,6 +307,28 @@ export class App {
 		}
 
 		const eventId = await p.client.sendImage(chat, data);
+		if (eventId) {
+			await this.puppet.eventSync.insert(room, data.eventId!, eventId);
+		}
+	}
+
+	public async handleMatrixFile(
+		room: IRemoteRoom,
+		data: IFileEvent,
+		asUser: ISendingUser | null,
+		event: any,
+	) {
+		const p = this.puppets[room.puppetId];
+		if (!p) {
+			return;
+		}
+		const chat = p.client.chats.get(room.roomId);
+		if (!chat) {
+			log.warn(`Room ${room.roomId} not found!`);
+			return;
+		}
+
+		const eventId = await p.client.sendFile(chat, data);
 		if (eventId) {
 			await this.puppet.eventSync.insert(room, data.eventId!, eventId);
 		}
