@@ -25,6 +25,7 @@
     "moment": "^2.29.1",
     "mx-puppet-bridge": "0.1.4",
     "node-emoji": "^1.10.0",
+    "request": "^2.88.2",
     "tslint": "^5.20.1",
     "typescript": "^3.8.3",
     "url-join": "^4.0.1"
