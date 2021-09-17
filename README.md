@@ -18,7 +18,8 @@ Currently supported and planned features are:
 - [ ] Reactions
 - [X] Images (Matrix -> Teams)
 - [ ] Images (Teams -> Matrix)
-- [ ] Attachments
+- [X] Attachments (Matrix -> Teams)
+- [ ] Attachments (Teams -> Matrix)
 - [ ] Teams Chats (maybe later....)
 
 ## Limitations
