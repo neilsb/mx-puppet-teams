@@ -35,6 +35,9 @@ The Bridge will require to be accessible to allow Microsoft Graph API to call we
 
 The `oauth:serverBaseUri` setting in config.yaml should be set to the base URI  (e.g.  `https://my.domain.com/` or `https://me.home.net:2700/`, etc)
 
+## Getting Started (Docker)
+
+Docker image is avaialable from hub.docker.com/r/neilsb/mx-puppet-teams
 
 ## Install Instructions (from Source)
 
