@@ -37,7 +37,7 @@ The `oauth:serverBaseUri` setting in config.yaml should be set to the base URI  
 
 ## Getting Started (Docker)
 
-Docker image is avaialable from hub.docker.com/r/neilsb/mx-puppet-teams
+Docker image is avaialable from https://hub.docker.com/r/neilsb/mx-puppet-teams
 
 ## Install Instructions (from Source)
 
