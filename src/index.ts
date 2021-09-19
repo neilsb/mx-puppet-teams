@@ -111,7 +111,8 @@ async function run() {
 	puppet.AS.expressAppInstance.get('/login', function (req, res) {
 		const redirectUrl = urljoin(Config().oauth.serverBaseUri, Config().oauth.redirectPath);
 		const authUrl = urljoin(Config().oauth.endPoint, "/authorize");
-		res.redirect(`${authUrl}?response_type=code&redirect_uri=${encodeURI(redirectUrl)}&client_id=${Config().oauth.clientId}`);
+		const scopes = "https://graph.microsoft.com/Chat.ReadWrite https://graph.microsoft.com/ChatMessage.Read https://graph.microsoft.com/ChatMessage.Send https://graph.microsoft.com/offline_access https://graph.microsoft.com/User.Read";
+		res.redirect(`${authUrl}?response_type=code&redirect_uri=${encodeURI(redirectUrl)}&client_id=${Config().oauth.clientId}&scope=${encodeURI(scopes)}`);
 	});
 
 	puppet.AS.expressAppInstance.get(Config().oauth.redirectPath, AuthProvider.oauthCallback);

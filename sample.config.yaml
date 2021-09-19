@@ -18,7 +18,7 @@ oauth:
   clientId: AZURE_APP_CLIENT_ID
   clientSecret: AZURE_APP_CLIENT_SECRET
   # Azure Auth Endpoint
-  #endPoint: https://login.windows.net/common/oauth2
+  #endPoint: https://login.windows.net/common/oauth2/v2.0
   # Path where to listen for OAuth redirect callbacks.
   redirectPath: /msteams/oauth
   # This is the base URL Azure will use for push webhooks, and where users will be directed to login

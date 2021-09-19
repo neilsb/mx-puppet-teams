@@ -18,7 +18,7 @@ class OAuthConfig {
 	public clientSecret = "";
 	public redirectPath = "";
 	public serverBaseUri = "";
-    public endPoint = "https://login.windows.net/common/oauth2"
+    public endPoint = "https://login.windows.net/common/oauth2/v2.0"
 }
 
 class TeamsConfig {
