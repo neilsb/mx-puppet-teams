@@ -3,7 +3,7 @@
 # mx-puppet-teams
 This is a early version of a Microsfot Teams puppeting bridge for matrix. It is based on [mx-puppet-bridge](https://github.com/Sorunome/mx-puppet-bridge) and uses the Microsoft Graph API (Beta)
 
-The bridge does not require teams administrative rights, and is initially aimed at supporting chats, rather than team conversations
+The bridge does not generally require teams administrative rights, and is initially aimed at supporting chats, rather than team conversations.
 
 ## Features
 
@@ -98,7 +98,9 @@ The following steps should be followed to create the Azure application for authe
    * `User.Read`
    * `offline_access`
 
-## Linking your Microsoft account
-With the bridge running, visit `serverBaseUri`/login (e.g. `https://my.domain.com/login`).  This will take you to microsoft login page.  After logging in a 6 character authorisation code will be displayed. This code should be used to link your matrix account to your Microsoft account.
+## Linking your Microsoft Work/School account
+With the bridge running, visit `serverBaseUri`/login (e.g. `https://my.domain.com/login`).  This will take you to microsoft login page.  After logging in a 6 character authorisation code will be displayed. This code should be used to link your matrix account to your Microsoft work or school account.
 
 Microsoft require you to revalidate the application every (approx) 90 days. To do this visit the login link above to retrieve a new 6 digit code, then talk to the bot and use the `relink {puppetId} {code}` command.   e.g. `relink 1 abcdef`
+
+_Note: The bridge does not currently work with the personal version of teams._
