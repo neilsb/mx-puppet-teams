@@ -1,4 +1,6 @@
-![Matrix](https://img.shields.io/matrix/mx-puppet-teams:matrix.org?style=flat-square&label=%23mx-puppet-teams%3Amatrix.org&logo=matrix)
+> This project is no longer being updated.   The initial goal was to provide an easy, reliable way for normal users to bridge MS Teams to Matrix using User Permissions, without requiring changes to the AD Tennant and thus approval from the Domain Owner.  However due to the limitation in Microsofts Graph API, and the default settings for Active Directory domains, this does not seem like an achivable goal.
+> 
+> Feel free to fork and use the project, but a better route to achieving this goal (if you ignore the Teams ToS) would be to emulate the Teams Client and use the internal Teams API which will give access to pretty much do what is required. [fossteams/teams-cli](https://github.com/fossteams/teams-cli) may be worth looking into in this case.
 
 # mx-puppet-teams
 This is a early version of a Microsfot Teams puppeting bridge for matrix. It is based on [mx-puppet-bridge](https://github.com/Sorunome/mx-puppet-bridge) and uses the Microsoft Graph API (Beta)
