@@ -3,7 +3,7 @@
 > Feel free to fork and use the project, but a better route to achieving this goal (if you ignore the Teams ToS) would be to emulate the Teams Client and use the internal Teams API which will give access to pretty much do what is required. [fossteams/teams-api](https://github.com/fossteams/teams-api) may be worth looking into in this case.
 
 # mx-puppet-teams
-This is a early version of a Microsfot Teams puppeting bridge for matrix. It is based on [mx-puppet-bridge](https://github.com/Sorunome/mx-puppet-bridge) and uses the Microsoft Graph API (Beta)
+This is a early version of a Microsoft Teams puppeting bridge for matrix. It is based on [mx-puppet-bridge](https://github.com/Sorunome/mx-puppet-bridge) and uses the Microsoft Graph API (Beta)
 
 The bridge does not generally require teams administrative rights, and is initially aimed at supporting chats, rather than team conversations.
 
